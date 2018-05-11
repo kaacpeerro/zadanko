@@ -6,7 +6,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
-import java.io.File;
+import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -29,10 +29,10 @@ public class UserFileDataFetcherTest {
     }
 
     @Test
-    public void shouldFetchAllUsersFromFile() {
+    public void shouldFetchAllUsersFromFile() throws IOException {
 
-        FileData<User> fileUserData = fileDataFetcher.fetch(userDataFilePath, User::new);
+        FileData<User> fileUserData = fileDataFetcher.fetch(userDataFilePath, ",");
 
-        assertEquals(fileUserData.countAll(), 50);
+        assertEquals(50, fileUserData.countAll());
     }
 }
