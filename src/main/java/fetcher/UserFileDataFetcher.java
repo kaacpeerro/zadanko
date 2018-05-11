@@ -5,7 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-
+import java.time.format.DateTimeParseException;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -19,6 +19,7 @@ class UserFileDataFetcher implements FileDataFetcher<User> {
             return lines
                     .map(line -> line.trim().split(delimiter))
                     .filter(this::hasRequiredColumnValues)
+                    .filter(this::hasValidDateFormat)
                     .map(this::covertToUser)
                     .collect(Collectors.collectingAndThen(Collectors.toSet(), FileData::new));
         }
@@ -27,7 +28,7 @@ class UserFileDataFetcher implements FileDataFetcher<User> {
     private User covertToUser(String[] validLines) {
 
         String phoneNumber = validLines.length >= 4 ? validLines[3] : null;
-
+        
         return User.builder()
                 .firstName(validLines[0])
                 .lastName(validLines[1])
@@ -40,6 +41,13 @@ class UserFileDataFetcher implements FileDataFetcher<User> {
         return columns.length >= 3;
     }
 
-
+    private boolean hasValidDateFormat(String[] columns) {
+        try {
+            LocalDate.parse(columns[2], formatter);
+            return true;
+        } catch (DateTimeParseException e) {
+            return false;
+        }
+    }
 
 }
