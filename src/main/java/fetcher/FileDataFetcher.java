@@ -1,6 +1,5 @@
 package fetcher;
 
-
 import java.io.IOException;
 import java.nio.file.Path;
 

@@ -9,12 +9,20 @@ class User {
     private final String lastName;
     private final LocalDate birthday;
     private final String phoneNumber;
-    
+
     private User(UserBuilder builder) {
         this.firstName = builder.firstName;
         this.lastName = builder.lastName;
         this.birthday = builder.birthDay;
         this.phoneNumber = builder.phoneNumber;
+    }
+
+    String getPhoneNumber() {
+        return this.phoneNumber;
+    }
+
+    LocalDate getBirthday() {
+        return this.birthday;
     }
 
     static UserBuilder builder() {
