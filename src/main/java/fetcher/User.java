@@ -1,6 +1,7 @@
 package fetcher;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 class User {
 
@@ -8,7 +9,7 @@ class User {
     private final String lastName;
     private final LocalDate birthday;
     private final String phoneNumber;
-
+    
     private User(UserBuilder builder) {
         this.firstName = builder.firstName;
         this.lastName = builder.lastName;
@@ -20,6 +21,23 @@ class User {
         return new UserBuilder();
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(firstName, user.firstName) &&
+                Objects.equals(lastName, user.lastName) &&
+                Objects.equals(birthday, user.birthday) &&
+                Objects.equals(phoneNumber, user.phoneNumber);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(firstName, lastName, birthday, phoneNumber);
+    }
+
     public static class UserBuilder {
 
         private String firstName;
@@ -27,7 +45,8 @@ class User {
         private LocalDate birthDay;
         private String phoneNumber;
 
-        UserBuilder() { }
+        UserBuilder() {
+        }
 
         UserBuilder firstName(String firstName) {
             this.firstName = lastName;
