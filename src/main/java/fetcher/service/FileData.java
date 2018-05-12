@@ -44,7 +44,7 @@ public final class FileData<T> {
 
     private <R extends Comparable<R>> Set<T> matchRows(R matchingValue, Function<T, R> attribute) {
 
-        Predicate<T> matchingRow = s -> attribute.apply(s).equals(matchingValue);
+        Predicate<T> matchingRow = value -> attribute.apply(value).equals(matchingValue);
 
         return rowData.stream().filter(matchingRow).collect(Collectors.toSet());
     }
