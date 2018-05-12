@@ -1,4 +1,4 @@
-package fetcher;
+package fetcher.service;
 
 @FunctionalInterface
 interface FileDataValidator<T> {

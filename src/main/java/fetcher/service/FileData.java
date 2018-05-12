@@ -1,4 +1,4 @@
-package fetcher;
+package fetcher.service;
 
 import java.util.Collections;
 import java.util.Objects;

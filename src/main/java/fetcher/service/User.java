@@ -1,4 +1,4 @@
-package fetcher;
+package fetcher.service;
 
 import java.time.LocalDate;
 import java.util.Objects;

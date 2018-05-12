@@ -1,4 +1,4 @@
-package fetcher;
+package fetcher.service;
 
 import org.junit.Before;
 import org.junit.Test;
