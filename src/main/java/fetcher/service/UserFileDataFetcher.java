@@ -34,13 +34,10 @@ class UserFileDataFetcher implements FileDataFetcher<User> {
     }
 
     private String[] trimArray(String[] strings) {
-        return Stream.of(strings)
-                .map(String::trim)
-                .toArray(String[]::new);
+        return Stream.of(strings).map(String::trim).toArray(String[]::new);
     }
 
     private User covertToUser(String[] validLines) {
-
         String phoneNumber = validLines.length >= 4 ? validLines[3] : null;
 
         return User.builder()

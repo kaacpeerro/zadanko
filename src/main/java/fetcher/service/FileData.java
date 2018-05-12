@@ -33,7 +33,6 @@ public final class FileData<T> {
     }
 
     public <R extends Comparable<R>> FileData<T> findMinBy(Function<T, R> attribute) {
-
         return rowData.stream()
                 .map(attribute)
                 .min(Comparable::compareTo)
@@ -43,7 +42,6 @@ public final class FileData<T> {
     }
 
     private <R extends Comparable<R>> Set<T> matchRows(R matchingValue, Function<T, R> attribute) {
-
         Predicate<T> matchingRow = value -> attribute.apply(value).equals(matchingValue);
 
         return rowData.stream().filter(matchingRow).collect(Collectors.toSet());
