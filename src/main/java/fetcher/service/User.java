@@ -2,6 +2,7 @@ package fetcher.service;
 
 import java.time.LocalDate;
 import java.time.Period;
+
 import java.util.Objects;
 
 public class User {
@@ -87,6 +88,5 @@ public class User {
         User build() {
             return new User(this);
         }
-
     }
 }
