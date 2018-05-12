@@ -1,14 +1,17 @@
 package fetcher.service;
 
+import java.io.IOException;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
-import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+
 import java.time.LocalDate;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
@@ -43,7 +46,8 @@ public class UserFileDataFetcherTest {
         User oldestUserWithoutPhoneNumber = createUser("John", "Smith", LocalDate.of(1992, 7, 28), null);
         User user3 = createUser("Foo", "Bar", LocalDate.of(2000, 7, 28), "555999000");
 
-        Set<User> allUsers = new HashSet<>(Arrays.asList(oldestUser1, oldestUser2, oldestUserWithoutPhoneNumber, user3));
+        Set<User> allUsers = new HashSet<>();
+        Collections.addAll(allUsers, oldestUser1, oldestUser2, oldestUserWithoutPhoneNumber, user3);
 
         FileData<User> fileUserData = new FileData<>(allUsers);
 
