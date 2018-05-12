@@ -1,9 +1,10 @@
 package fetcher.service;
 
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.Objects;
 
-class User {
+public class User {
 
     private final String firstName;
     private final String lastName;
@@ -17,12 +18,19 @@ class User {
         this.phoneNumber = builder.phoneNumber;
     }
 
-    String getPhoneNumber() {
+    public String getPhoneNumber() {
         return this.phoneNumber;
     }
 
-    LocalDate getBirthday() {
+    public LocalDate getBirthday() {
         return this.birthday;
+    }
+
+    @Override
+    public String toString() {
+        int age = Period.between(birthday, LocalDate.now()).getYears();
+
+        return firstName + " " + lastName + " " + age + " " + phoneNumber;
     }
 
     static UserBuilder builder() {
