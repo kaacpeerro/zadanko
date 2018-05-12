@@ -1,7 +1,5 @@
 package fetcher;
 
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -20,39 +18,31 @@ import static org.junit.Assert.assertEquals;
 @RunWith(JUnit4.class)
 public class UserFileDataFetcherTest {
 
-    private static Path userDataFilePath;
-    private UserFileDataFetcher fileDataFetcher;
-
-    @BeforeClass
-    public static void setup() {
-        userDataFilePath = Paths.get("src", "test", "resources", "userData.txt");
-    }
-
-    @Before
-    public void initialize() {
-        fileDataFetcher = new UserFileDataFetcher();
-    }
+    private static Path filePath = Paths.get("src", "test", "resources", "userData.txt");
 
     @Test
     public void shouldFetchAllUsersFromFile() throws IOException {
-
-        FileData<User> fileUserData = fileDataFetcher.fetch(userDataFilePath, ",");
-
+        FileData<User> fileUserData = new UserFileDataFetcher().fetch(filePath, ",");
         assertEquals(50, fileUserData.countAll());
     }
 
     @Test
-    public void shouldFindTheOldestUsersWithPhoneNumber() throws IOException {
-        User actualOldestUser1 = createUser("Happy","Raith",LocalDate.of(1992, 7, 28),"4892948112");
-        User actualOldestUser2 = createUser("Kacper", "Double",LocalDate.of(1992, 7, 28), "123456789");
+    public void shouldFindTheOldestUsersWithPhoneNumber() {
+        User oldestUser1 = createUser("Happy", "Raith", LocalDate.of(1992, 7, 28), "4892948112");
+        User oldestUser2 = createUser("Kacper", "Double", LocalDate.of(1992, 7, 28), "123456789");
+        User user3 = createUser("Foo", "Bar", LocalDate.of(2000, 7, 28), "555999000");
 
-        Set<User> oldestUsersWithPhoneNumber = new HashSet<>(Arrays.asList(actualOldestUser1, actualOldestUser2));
+        Set<User> allUsers = new HashSet<>(Arrays.asList(oldestUser1, oldestUser2, user3));
 
-        FileData<User> fileUserData = fileDataFetcher.fetch(userDataFilePath, ",");
-        FileData<User> usersWithPhoneNumber = fileUserData.filterBy(Collections.singleton(this::hasPhoneNumber));
-        FileData<User> expectedOldestUserWithPhoneNumber = usersWithPhoneNumber.findMinBy(User::getBirthday);
+        FileData<User> fileUserData = new FileData<>(allUsers);
 
-        assertEquals(oldestUsersWithPhoneNumber, expectedOldestUserWithPhoneNumber.showUsers());
+        FileData<User> expectedOldestUsersWithPhoneNumber = fileUserData
+                        .filterBy(Collections.singleton(this::hasPhoneNumber))
+                        .findMinBy(User::getBirthday);
+
+        Set<User> oldestUsersWithPhoneNumber = new HashSet<>(Arrays.asList(oldestUser1, oldestUser2));
+
+        assertEquals(oldestUsersWithPhoneNumber, expectedOldestUsersWithPhoneNumber.showUsers());
     }
 
     private boolean hasPhoneNumber(User user) {
