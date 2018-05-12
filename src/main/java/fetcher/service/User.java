@@ -65,7 +65,7 @@ public class User {
         }
 
         UserBuilder firstName(String firstName) {
-            this.firstName = lastName;
+            this.firstName = firstName;
             return this;
         }
 
