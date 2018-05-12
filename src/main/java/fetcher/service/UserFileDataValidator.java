@@ -3,6 +3,7 @@ package fetcher.service;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+
 import java.util.Optional;
 
 class UserFileDataValidator implements FileDataValidator<String[]> {
@@ -12,12 +13,12 @@ class UserFileDataValidator implements FileDataValidator<String[]> {
     @Override
     public boolean isValid(String[] data) {
         return Optional.ofNullable(data)
-                .filter(this::hasRequiredColumnValues)
+                .filter(this::hasRequiredColumns)
                 .filter(this::hasValidDateFormat)
                 .isPresent();
     }
 
-    private boolean hasRequiredColumnValues(String[] columns) {
+    private boolean hasRequiredColumns(String[] columns) {
         return columns.length >= 3;
     }
 
