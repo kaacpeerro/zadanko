@@ -34,7 +34,6 @@ class FetcherMain {
         System.out.printf("File contains %d valid users\n", allUsers);
         System.out.println("The oldest user(s) with phone number are:");
         oldestUsersWithPhoneNumber.forEach(System.out::println);
-
     }
 
     private static boolean hasPhoneNumber(User user) {
