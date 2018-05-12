@@ -31,9 +31,16 @@ class FetcherMain {
                 .findMinBy(User::getBirthday)
                 .showData();
 
-        System.out.printf("File contains %d valid users\n", allUsers);
-        System.out.println("The oldest user(s) with phone number are:");
-        oldestUsersWithPhoneNumber.forEach(System.out::println);
+        System.out.printf("File contains %d valid users\n" +
+                "The oldest user(s) with phone number are:\n" + showUsers(oldestUsersWithPhoneNumber), allUsers);
+    }
+
+    private static String showUsers(Set<User> oldestUsersWithPhoneNumber) {
+        StringBuilder users = new StringBuilder();
+        for(User user : oldestUsersWithPhoneNumber)
+            users.append(user).append(System.getProperty("line.separator"));
+
+        return users.toString();
     }
 
     private static boolean hasPhoneNumber(User user) {
