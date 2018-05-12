@@ -10,7 +10,10 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
 
@@ -40,14 +43,16 @@ public class UserFileDataFetcherTest {
 
     @Test
     public void shouldFindTheOldestUsersWithPhoneNumber() throws IOException {
+        User actualOldestUser1 = createUser("Happy","Raith",LocalDate.of(1992, 7, 28),"4892948112");
+        User actualOldestUser2 = createUser("Kacper", "Double",LocalDate.of(1992, 7, 28), "123456789");
 
-        User actualOldestUser = createUser("Happy","Raith",LocalDate.of(1992, 7, 28),"4892948112");
+        Set<User> oldestUsersWithPhoneNumber = new HashSet<>(Arrays.asList(actualOldestUser1, actualOldestUser2));
 
         FileData<User> fileUserData = fileDataFetcher.fetch(userDataFilePath, ",");
         FileData<User> usersWithPhoneNumber = fileUserData.filterBy(Collections.singleton(this::hasPhoneNumber));
         FileData<User> expectedOldestUserWithPhoneNumber = usersWithPhoneNumber.findMinBy(User::getBirthday);
 
-        assertEquals(Collections.singleton(actualOldestUser), expectedOldestUserWithPhoneNumber.showUsers());
+        assertEquals(oldestUsersWithPhoneNumber, expectedOldestUserWithPhoneNumber.showUsers());
     }
 
     private boolean hasPhoneNumber(User user) {
