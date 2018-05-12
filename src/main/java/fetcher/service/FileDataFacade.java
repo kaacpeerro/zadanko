@@ -1,13 +1,14 @@
 package fetcher.service;
 
 import java.io.IOException;
+
 import java.nio.file.Path;
 
 public class FileDataFacade {
 
     private final FileDataFetcher<User> fileDataFetcher;
 
-    public FileDataFacade(FileDataFetcher<User> fileDataFetcher) {
+    FileDataFacade(FileDataFetcher<User> fileDataFetcher) {
         this.fileDataFetcher = fileDataFetcher;
     }
 
