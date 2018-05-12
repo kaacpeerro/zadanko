@@ -30,9 +30,10 @@ public class UserFileDataFetcherTest {
     public void shouldFindTheOldestUsersWithPhoneNumber() {
         User oldestUser1 = createUser("Happy", "Raith", LocalDate.of(1992, 7, 28), "4892948112");
         User oldestUser2 = createUser("Kacper", "Double", LocalDate.of(1992, 7, 28), "123456789");
+        User oldestUserWithoutPhoneNumber = createUser("John", "Smith", LocalDate.of(1992, 7, 28), null);
         User user3 = createUser("Foo", "Bar", LocalDate.of(2000, 7, 28), "555999000");
 
-        Set<User> allUsers = new HashSet<>(Arrays.asList(oldestUser1, oldestUser2, user3));
+        Set<User> allUsers = new HashSet<>(Arrays.asList(oldestUser1, oldestUser2, oldestUserWithoutPhoneNumber, user3));
 
         FileData<User> fileUserData = new FileData<>(allUsers);
 
