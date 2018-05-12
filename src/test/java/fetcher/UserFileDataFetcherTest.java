@@ -1,5 +1,6 @@
 package fetcher;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -20,10 +21,18 @@ public class UserFileDataFetcherTest {
 
     private static Path filePath = Paths.get("src", "test", "resources", "userData.txt");
 
+    private FileDataFacade fileDataFacade;
+
+    @Before
+    public void beforeEach() {
+        FileDataValidator<String[]> fileDataValidator = new UserFileDataValidator();
+        FileDataFetcher<User> fileDataFetcher = new UserFileDataFetcher(fileDataValidator);
+        fileDataFacade = new FileDataFacade(fileDataFetcher);
+    }
+
     @Test
     public void shouldFetchAllUsersFromFile() throws IOException {
-        UserFileDataValidator userFileDataValidator = new UserFileDataValidator();
-        FileData<User> fileUserData = new UserFileDataFetcher(userFileDataValidator).fetch(filePath, ",");
+        FileData<User> fileUserData = fileDataFacade.fetch(filePath, ",");
         assertEquals(50, fileUserData.countAll());
     }
 
@@ -44,7 +53,7 @@ public class UserFileDataFetcherTest {
 
         Set<User> oldestUsersWithPhoneNumber = new HashSet<>(Arrays.asList(oldestUser1, oldestUser2));
 
-        assertEquals(oldestUsersWithPhoneNumber, expectedOldestUsersWithPhoneNumber.showUsers());
+        assertEquals(oldestUsersWithPhoneNumber, expectedOldestUsersWithPhoneNumber.showData());
     }
 
     private boolean hasPhoneNumber(User user) {
