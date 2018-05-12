@@ -5,21 +5,25 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 class UserFileDataFetcher implements FileDataFetcher<User> {
 
+    private final FileDataValidator<String[]> fileDataValidator;
+
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+    UserFileDataFetcher(FileDataValidator<String[]> fileDataValidator) {
+        this.fileDataValidator = fileDataValidator;
+    }
 
     @Override
     public FileData<User> fetch(Path userDataFilePath, String delimiter) throws IOException {
         try (Stream<String> lines = Files.lines(userDataFilePath)) {
             return lines
                     .map(line -> line.trim().split(delimiter))
-                    .filter(this::hasRequiredColumnValues)
-                    .filter(this::hasValidDateFormat)
+                    .filter(fileDataValidator::isValid)
                     .map(this::covertToUser)
                     .collect(Collectors.collectingAndThen(Collectors.toSet(), FileData::new));
         }
@@ -36,18 +40,4 @@ class UserFileDataFetcher implements FileDataFetcher<User> {
                 .phoneNumber(phoneNumber)
                 .build();
     }
-
-    private boolean hasRequiredColumnValues(String[] columns) {
-        return columns.length >= 3;
-    }
-
-    private boolean hasValidDateFormat(String[] columns) {
-        try {
-            LocalDate.parse(columns[2], formatter);
-            return true;
-        } catch (DateTimeParseException e) {
-            return false;
-        }
-    }
-
 }

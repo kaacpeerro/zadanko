@@ -22,7 +22,8 @@ public class UserFileDataFetcherTest {
 
     @Test
     public void shouldFetchAllUsersFromFile() throws IOException {
-        FileData<User> fileUserData = new UserFileDataFetcher().fetch(filePath, ",");
+        UserFileDataValidator userFileDataValidator = new UserFileDataValidator();
+        FileData<User> fileUserData = new UserFileDataFetcher(userFileDataValidator).fetch(filePath, ",");
         assertEquals(50, fileUserData.countAll());
     }
 
