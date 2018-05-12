@@ -1,6 +1,9 @@
 package fetcher.service;
 
-public class FetcherConfiguration {
+public final class FetcherConfiguration {
+
+    private FetcherConfiguration() {
+    }
 
     public static FileDataFacade fileDataFacade() {
         FileDataValidator<String[]> fileDataValidator = new UserFileDataValidator();
