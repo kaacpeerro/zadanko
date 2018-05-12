@@ -11,7 +11,7 @@ public final class FileData<T> {
 
     private final Set<T> rowData;
 
-    public FileData(Set<T> rowData) {
+    FileData(Set<T> rowData) {
         this.rowData = rowData;
     }
 
